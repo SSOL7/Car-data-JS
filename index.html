@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #ff9100;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Constructor Function</h1>
+    <form id="car-form">
+                <div>
+                    <label for="make">Car Make</label>
+                    <input type="text" id="make" name="make">
+                </div>
+                
+                <div>
+                    <label for="model">Car Model</label>
+                    <input type="text" id="model" name="model">
+                </div>
+                
+                <div>
+                    <label for="year">Year</label>
+                    <input type="number" id="year" name="year">
+                </div>
+                
+                <div>
+                    <label for="color">Color</label>
+                    <input type="text" id="color" name="color">
+                </div>
+            </form>
+
+            <p>Cars database</p>
+                <table>
+                    <tr>
+                        <th>Make</th>
+                        <th>Model</th>
+                        <th>Year</th>
+                        <th>Color</th>
+                    </tr>
+                </table>
+
+                <div class="button">
+                    <input type="submit" value="Add Car" id="submit">
+                    <input type="reset" id="reset" value="Reset">
+                </div>
+
+    <script>
+        const carForm = document.getElementById("car-form");
+        const maker = document.querySelector("#make");
+        const model = document.querySelector("#model");
+        const year = document.querySelector("#year");
+        const color = document.querySelector("#color");
+        const btnSubmit = document.querySelector("#submit");
+        const btnReset = document.querySelector("#reset");
+        let cars = [];
+
+
+
+        // make constructor function for car make, model, year, color
+        function Car(make, model, year, color) {
+            this.make = make;
+            this.model = model;
+            this.year = year;
+            this.color = color;
+        }
+
+        // add event listener to submit button
+        btnSubmit.addEventListener("click", function(e) {
+            e.preventDefault();
+            // create new car object
+            const newCar = new Car(maker.value, model.value, year.value, color.value);
+            // add new car object to cars array
+            cars.push(newCar);
+            // clear form
+            carForm.reset();
+            // display cars
+            displayCars();
+        });
+
+        // add event listener to reset button
+        btnReset.addEventListener("click", function(e) {
+            e.preventDefault();
+            // clear form
+            carForm.reset();
+            // clear cars array
+            cars = [];
+            // clear table
+            document.querySelector("table").innerHTML = "";
+        });
+
+        // display cars function
+        function displayCars() {
+            // clear table
+            document.querySelector("table").innerHTML = "";
+            // create table header
+            const tableHeader = document.createElement("tr");
+            const makeHeader = document.createElement("th");
+            const modelHeader = document.createElement("th");
+            const yearHeader = document.createElement("th");
+            const colorHeader = document.createElement("th");
+            makeHeader.textContent = "Make";
+            modelHeader.textContent = "Model";
+            yearHeader.textContent = "Year";
+            colorHeader.textContent = "Color";
+            tableHeader.appendChild(makeHeader);
+            tableHeader.appendChild(modelHeader);
+            tableHeader.appendChild(yearHeader);
+            tableHeader.appendChild(colorHeader);
+            document.querySelector("table").appendChild(tableHeader);
+            // loop through cars array
+            for (let i = 0; i < cars.length; i++) {
+                // create table row
+                const tableRow = document.createElement("tr");
+                // create table data
+                const makeData = document.createElement("td");
+                const modelData = document.createElement("td");
+                const yearData = document.createElement("td");
+                const colorData = document.createElement("td");
+                // add car data to table data
+                makeData.textContent = cars[i].make;
+                modelData.textContent = cars[i].model;
+                yearData.textContent = cars[i].year;
+                colorData.textContent = cars[i].color;
+                // add table data to table row
+                tableRow.appendChild(makeData);
+                tableRow.appendChild(modelData);
+                tableRow.appendChild(yearData);
+                tableRow.appendChild(colorData);
+                // add table row to table
+                document.querySelector("table").appendChild(tableRow);
+            }
+        }
+
+
+
+    </script>
+    
+</body>
+</html>
