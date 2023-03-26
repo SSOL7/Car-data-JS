@@ -7,36 +7,121 @@
     <title>Document</title>
     <style>
         body {
-            background-color: #ff9100;
+            background-color: #333;
             color: #fff;
         }
+
+        .table {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: red;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .input {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+        }
+
+        input {
+            margin-top: 10px;
+            width: 200px;
+            height: 30px;
+            border-radius: 5px;
+            border: none;
+            padding-left: 10px;
+            background-color: aqua;
+        }
+
+        .search {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+
     </style>
+    <script src="main.js"></script>
 </head>
 <body>
     <h1>Constructor Function</h1>
-    <form id="car-form">
-                <div>
-                    <label for="make">Car Make</label>
-                    <input type="text" id="make" name="make">
-                </div>
-                
-                <div>
-                    <label for="model">Car Model</label>
-                    <input type="text" id="model" name="model">
-                </div>
-                
-                <div>
-                    <label for="year">Year</label>
-                    <input type="number" id="year" name="year">
-                </div>
-                
-                <div>
-                    <label for="color">Color</label>
-                    <input type="text" id="color" name="color">
-                </div>
-            </form>
 
-            <p>Cars database</p>
+    
+    <form id="car-form">
+                <div class="input">
+                    <label for="make">Car Make:</label>
+                    <input type="text" id="make" name="make" placeholder="Make">
+                </div>
+                
+                <div class="input">
+                    <label for="model">Car Model:</label>
+                    <input type="text" id="model" name="model" placeholder="Model">
+                </div>
+                
+                <div class="input">
+                    <label for="year">Year:</label>
+                    <input type="number" id="year" name="year"  placeholder="Year">
+                </div>
+                
+                <div class="input">
+                    <label for="color">Color:</label>
+                    <input type="text" id="color" name="color" placeholder="Color">
+                </div>
+                
+            </form>
+            <div class="button">
+                <input type="submit" value="Add Car" id="submit">
+                <input type="reset" id="reset" value="Reset">
+            </div>
+
+            <div class="search">
+                <label for="search">Search:</label>
+                <input type="text" id="search" name="search" placeholder="Search">
+            </div>
+            
+            <div class="table">
+                <h2>Cars database</h2>
                 <table>
                     <tr>
                         <th>Make</th>
@@ -45,11 +130,9 @@
                         <th>Color</th>
                     </tr>
                 </table>
+            </div>
 
-                <div class="button">
-                    <input type="submit" value="Add Car" id="submit">
-                    <input type="reset" id="reset" value="Reset">
-                </div>
+                
 
     <script>
         const carForm = document.getElementById("car-form");
@@ -59,7 +142,37 @@
         const color = document.querySelector("#color");
         const btnSubmit = document.querySelector("#submit");
         const btnReset = document.querySelector("#reset");
+        const search = document.querySelector("#search");
         let cars = [];
+
+        // add event listener to search input
+        search.addEventListener("keyup", function(e) {
+            e.preventDefault();
+            // get search value
+            const searchValue = search.value.toLowerCase();
+            // get table rows
+            const tableRows = document.querySelectorAll("tr");
+            // loop through table rows
+            for (let i = 0; i < tableRows.length; i++) {
+                // get table data
+                const tableData = tableRows[i].getElementsByTagName("td")[0];
+                // check if table data is not empty
+                if (tableData) {
+                    // get table data text
+                    const tableDataText = tableData.textContent || tableData.innerText;
+                    // check if table data text includes search value
+                    if (tableDataText.toLowerCase().indexOf(searchValue) > -1) {
+                        // show table row
+                        tableRows[i].style.display = "";
+                    } else {
+                        // hide table row
+                        tableRows[i].style.display = "none";
+                    }
+                }
+            }
+        });
+
+        
 
 
 
